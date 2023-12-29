@@ -72,6 +72,7 @@ def DonneeDunParametre(parametre):
 print("//////////////////////////////////////////////")
 print(DonneeDunParametre("VT"))
 print(DonneeDunParametre("VEMS"))
-print(DonneeDunParametre("CVF"))
+print(DonneeDunParametre("VEMS%CF"))
+
 
 
