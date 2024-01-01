@@ -53,26 +53,29 @@ print(tester_type("-0.62") )
 
 
 
-def DonneeDunParametre(parametre):
-    liste_param=[]
+
+def DonneeDunParametre(parametre, pdf_text):
+    liste_param = []
     motif = fr'{parametre}\s+(.+)'
     correspondance = re.search(motif, pdf_text)
-    donnees_apres = correspondance.group(1)
-    liste_param.append(donnees_apres)
-    while tester_type(donnees_apres)==0:  #tant que la données suivant est une valeur pour le parametre on continue
-        motif=fr'{donnees_apres}\s+(.+)'
-        correspondance = re.search(motif, pdf_text)
-        if correspondance:
-            donnees_apres = correspondance.group(1)
-            if tester_type(donnees_apres)==0:
-                liste_param.append(donnees_apres)
 
+    while correspondance:
+        donnees_apres = correspondance.group(1)
+        liste_param.append(donnees_apres)
+
+        if tester_type(donnees_apres) == 0:
+            motif = fr'{donnees_apres}\s+(.+)'
+            correspondance = re.search(motif, pdf_text)
+        else:
+            break  # Stop if the data type is as expected
 
     return liste_param
+
+
 print("//////////////////////////////////////////////")
-print(DonneeDunParametre("VT"))
-print(DonneeDunParametre("VEMS"))
-print(DonneeDunParametre("VEMS%CF"))
+print(DonneeDunParametre("VT",pdf_text))
+print(DonneeDunParametre("VEMS",pdf_text))
+print(DonneeDunParametre("VEMS%CF",pdf_text))
 
 
 
