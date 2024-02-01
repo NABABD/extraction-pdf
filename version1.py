@@ -51,15 +51,11 @@ def extract_patient_data_from_text(text):
 
     return patient_data
 
-chemin = 'data_repository/PDF1.pdf'
+chemin = 'PDF1.pdf'
 
-pdf_text = extraction(chemin)
-save_text_to_file(pdf_text, './data_repository/test1.txt')
+pdf_text = extract_text_from_pdf(chemin)
+save_text_to_file(pdf_text, 'test1.txt')
 # Définir le motif d'expression régulière que vous souhaitez rechercher
 regex_pattern = r'\b(VEMS)\b'
 
-# Trouver les correspondances d'expression régulière dans le texte extrait
-regex_matches = expMatches(pdf_text, regex_pattern)
 
-
-print("Correspondances d'expression régulière trouvées:", regex_matches)
