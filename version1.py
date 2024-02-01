@@ -1,6 +1,10 @@
 import fitz  # PyMuPDF
 import re
 import pdfplumber
+import pandas 
+from pandas import ExcelWriter
+import xlsxwriter
+from xlsxwriter import Workbook
 
 # Function to extract the entire text from a PDF file
 def extract_text_from_pdf(pdf_path):
@@ -18,7 +22,7 @@ def save_text_to_file(text, file_path):
 
 # Function to extract patient data from the text content of a PDF
 def extract_patient_data_from_text(text):
-    # Dictionary to store the extracted data
+    # Dictionary to store the extrac,ted data
     patient_data = {}
 
     # Regular expressions to find the relevant information
@@ -37,6 +41,7 @@ def extract_patient_data_from_text(text):
     }
 
     # Extracting information using regex
+    patient_data['TEST']=1
     patient_data['NOM'] = re.search(name_regex, text).group(1)
     patient_data['Date de naissance'] = re.search(birth_date_regex, text).group(1)
     patient_data['Date du test'] = re.search(test_date_regex, text).group(1)
@@ -57,5 +62,31 @@ pdf_text = extract_text_from_pdf(chemin)
 save_text_to_file(pdf_text, 'test1.txt')
 # Définir le motif d'expression régulière que vous souhaitez rechercher
 regex_pattern = r'\b(VEMS)\b'
+# Use the existing extract_patient_data_from_text function to parse the extracted text
+pdf1_data = extract_patient_data_from_text(pdf_text)
+print(pdf1_data)
 
+# Create a DataFrame with the extracted data
+df = pandas.DataFrame([pdf1_data])
+df2 = pandas.DataFrame([pdf1_data])
 
+# Save the DataFrame to an Excel file
+excel_path= 'PatientData.xlsx'
+
+with pandas.ExcelWriter('multiple.xlsx', engine='xlsxwriter') as writer:
+    df.to_excel(writer, sheet_name='Sheet1',index=False)
+    df2.to_excel(writer, sheet_name='Sheetc',index=False)
+
+    workbook  = writer.book
+    worksheet = writer.sheets['Sheet1']
+    row = 2
+    col = 0
+
+    worksheet.write(row, col,     '2')
+    worksheet.write(row, col + 1, '24')
+    worksheet.write(row, col + 2, '56')
+    worksheet.write(row, col + 3, '45')
+
+"""workbook = xlsxwriter.Workbook("multiple.xlsx")
+worksheet1 = workbook.add_worksheet()
+"""
