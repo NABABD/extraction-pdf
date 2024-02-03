@@ -18,7 +18,15 @@ def extract_text_from_pdf(pdf_path):
 def save_text_to_file(text, file_path):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(text)
-
+#recupere la nième valeur d'un parametre 
+def get_nth_word(file_path, keyword, n):
+    with open(file_path, 'r') as file:
+        for line in file:
+            if line.startswith(keyword):
+                words = line.split()
+                if len(words) >= n+1:
+                    nth_word = words[n]
+                    return nth_word
 
 # Function to extract patient data from the text content of a PDF
 def extract_patient_data_from_text(text):
@@ -34,12 +42,12 @@ def extract_patient_data_from_text(text):
     bmi_regex = r"IMC:\s(\d+)"
 
     # Parameter headers and their corresponding regex
-    parameter_headers = {
-        "CVF Pré": r"CVF\s(\d+\.\d+)",
+    """parameter_headers = {
+        "VEMS Pré": r"VEMS\s(\d+\.\d+)\s(\d+\.\d+)\s(\d+\.\d+)" ,
         "CVF Zscore": r"CVF.*ZScore\s(\-?\d+\.\d+)",
         # Additional parameters can be added here with their regex patterns
     }
-
+    """
     # Extracting information using regex
     patient_data['TEST']=1
     patient_data['NOM'] = re.search(name_regex, text).group(1)
@@ -49,12 +57,76 @@ def extract_patient_data_from_text(text):
     patient_data['poids'] = re.search(weight_regex, text).group(1)
     patient_data['IMC'] = re.search(bmi_regex, text).group(1)
 
-    # Extracting parameters
+    return patient_data
+    #return patient_data
+def parametre(p):
+    patient_data={}
+    
+    if p=='VEMS':
+        #extraction spécifique
+        patient_data['VEMS/Pré']=get_nth_word('test1.txt','VEMS',2)
+        patient_data['VEMS/Zscore']=get_nth_word('test1.txt','VEMS',5)
+        patient_data['VEMS/POST BD']=0
+        patient_data['VBEex/Pré']=get_nth_word('test1.txt','VBEex',1)
+        patient_data['VBEex/Post BD']=0
+        patient_data['VBe%VF/prè']=get_nth_word('test1.txt','VBe%VF',1)
+        patient_data['VBe%VF/POST BD']=0
+        
+
+        return patient_data
+    elif p=='CVF':
+        patient_data['CVF/Pré']=get_nth_word('test1.txt','CVF',2)
+        patient_data['CVF/Zscore']=get_nth_word('test1.txt','CVF',5)
+        patient_data['CVF/POST BD']=0
+
+        return patient_data 
+    
+    elif p=='CRF':
+        patient_data['CRF/Pré']=get_nth_word('test1.txt','CRF',2)
+        patient_data['CRF/Zscore']=get_nth_word('test1.txt','CRF',5)
+        patient_data['CRF/POST BD']=0
+
+        return patient_data
+    elif p=='CPT':
+            patient_data['CPT/Pré']=get_nth_word('test1.txt','CPT',2)
+            patient_data['CPT/Zscore']=get_nth_word('test1.txt','CPT',5)
+            patient_data['CPT/POST BD']=0
+
+            return patient_data 
+
+    elif p=='DEMM':
+        patient_data['DEMM/Pré']=get_nth_word('test1.txt','DEMM',2)
+        patient_data['DEMM/Zscore']=get_nth_word('test1.txt','DEMM',5)
+        patient_data['DEMM/POST BD']=0
+
+        return patient_data 
+
+    elif p=='TEF':
+        patient_data['TEF/Pré']=get_nth_word('test1.txt','TEF',1)
+        patient_data['TEF/Zscore']=0
+        patient_data['TEF/POST BD']=0
+
+        return patient_data  
+
+    """file_path = 'test1.txt'
+
+    with open(file_path, 'r') as file:
+        var=''
+        for line in file:
+            if line.startswith('VEMS%CF'):
+                words = line.split()
+                if len(words) >= 6:
+                    third_word = words[5]
+                    var=third_word
+                    print("Third word in the line starting with 'VEMS':", third_word)
+                    break  # Stop processing after the first occurrence if needed
+    patient_data['VEMS%CF ZSCORE ']=var
+# Extracting parameters
     for header, regex in parameter_headers.items():
         match = re.search(regex, text)
-        patient_data[header] = match.group(1) if match else ''
-
-    return patient_data
+        patient_data[header] = match.group(2) if match else ''
+    """
+    
 
 chemin = 'PDF1.pdf'
 
@@ -63,22 +135,41 @@ save_text_to_file(pdf_text, 'test1.txt')
 # Définir le motif d'expression régulière que vous souhaitez rechercher
 regex_pattern = r'\b(VEMS)\b'
 # Use the existing extract_patient_data_from_text function to parse the extracted text
-pdf1_data = extract_patient_data_from_text(pdf_text)
-print(pdf1_data)
+feuille1_data = extract_patient_data_from_text(pdf_text)
+feuille2_data=feuille1_data.copy()
+feuille3_data=feuille1_data.copy()
+feuille4_data=feuille1_data.copy()
+feuille5_data=feuille1_data.copy()
+feuille6_data=feuille1_data.copy()
+feuille1_data.update(parametre('VEMS'))
+feuille2_data.update(parametre('CVF'))
+feuille3_data.update(parametre('CRF'))
+feuille4_data.update(parametre('CPT'))
+feuille5_data.update(parametre('DEMM'))
+feuille6_data.update(parametre('TEF'))
+print(feuille1_data)
+#pdf1_data = parametre(pdf_text)
 
 # Create a DataFrame with the extracted data
-df = pandas.DataFrame([pdf1_data])
-df2 = pandas.DataFrame([pdf1_data])
-
+df = pandas.DataFrame([feuille1_data])
+df2 = pandas.DataFrame([feuille2_data])
+df3 = pandas.DataFrame([feuille3_data])
+df4 = pandas.DataFrame([feuille4_data])
+df5 = pandas.DataFrame([feuille5_data])
+df6 = pandas.DataFrame([feuille6_data])
 # Save the DataFrame to an Excel file
 excel_path= 'PatientData.xlsx'
 
-with pandas.ExcelWriter('multiple.xlsx', engine='xlsxwriter') as writer:
-    df.to_excel(writer, sheet_name='Sheet1',index=False)
-    df2.to_excel(writer, sheet_name='Sheetc',index=False)
+with pandas.ExcelWriter('DATA.xlsx', engine='xlsxwriter') as writer:
+    df.to_excel(writer, sheet_name='VEMS',index=False)
+    df2.to_excel(writer, sheet_name='CVF',index=False)
+    df3.to_excel(writer, sheet_name='CRF',index=False)
+    df4.to_excel(writer, sheet_name='CPT',index=False)
+    df5.to_excel(writer, sheet_name='DEMM',index=False)
+    df6.to_excel(writer, sheet_name='TEF',index=False)
 
-    workbook  = writer.book
-    worksheet = writer.sheets['Sheet1']
+    """workbook  = writer.book
+    worksheet = writer.sheets['VEMS']
     row = 2
     col = 0
 
@@ -86,7 +177,7 @@ with pandas.ExcelWriter('multiple.xlsx', engine='xlsxwriter') as writer:
     worksheet.write(row, col + 1, '24')
     worksheet.write(row, col + 2, '56')
     worksheet.write(row, col + 3, '45')
-
+"""
 """workbook = xlsxwriter.Workbook("multiple.xlsx")
 worksheet1 = workbook.add_worksheet()
 """
