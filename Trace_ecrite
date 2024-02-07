@@ -37,3 +37,38 @@ La création d'une application capable d'extraire des données d'un fichier PDF 
     - Si votre application traite des données sensibles, assurez-vous d'implémenter des mesures de sécurité appropriées pour protéger les données.
 
 Notez que les étapes précises peuvent varier en fonction du langage de programmation que vous choisissez et des bibliothèques disponibles dans ce langage. En outre, des compétences en programmation et en traitement de données sont nécessaires pour développer une telle application.
+
+
+    """file_path = 'test1.txt'
+
+    with open(file_path, 'r') as file:
+        var=''
+        for line in file:
+            if line.startswith('VEMS%CF'):
+                words = line.split()
+                if len(words) >= 6:
+                    third_word = words[5]
+                    var=third_word
+                    print("Third word in the line starting with 'VEMS':", third_word)
+                    break  # Stop processing after the first occurrence if needed
+    patient_data['VEMS%CF ZSCORE ']=var
+# Extracting parameters
+    for header, regex in parameter_headers.items():
+        match = re.search(regex, text)
+        patient_data[header] = match.group(2) if match else ''
+    """
+
+
+       """workbook  = writer.book
+    worksheet = writer.sheets['VEMS']
+    row = 2
+    col = 0
+
+    worksheet.write(row, col,     '2')
+    worksheet.write(row, col + 1, '24')
+    worksheet.write(row, col + 2, '56')
+    worksheet.write(row, col + 3, '45')
+"""
+"""workbook = xlsxwriter.Workbook("multiple.xlsx")
+worksheet1 = workbook.add_worksheet()
+"""

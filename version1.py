@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+#import fitz   PyMuPDF
 import re
 import pdfplumber
 import pandas 
@@ -108,24 +108,6 @@ def parametre(p):
 
         return patient_data  
 
-    """file_path = 'test1.txt'
-
-    with open(file_path, 'r') as file:
-        var=''
-        for line in file:
-            if line.startswith('VEMS%CF'):
-                words = line.split()
-                if len(words) >= 6:
-                    third_word = words[5]
-                    var=third_word
-                    print("Third word in the line starting with 'VEMS':", third_word)
-                    break  # Stop processing after the first occurrence if needed
-    patient_data['VEMS%CF ZSCORE ']=var
-# Extracting parameters
-    for header, regex in parameter_headers.items():
-        match = re.search(regex, text)
-        patient_data[header] = match.group(2) if match else ''
-    """
     
 
 chemin = 'PDF1.pdf'
@@ -168,16 +150,3 @@ with pandas.ExcelWriter('DATA.xlsx', engine='xlsxwriter') as writer:
     df5.to_excel(writer, sheet_name='DEMM',index=False)
     df6.to_excel(writer, sheet_name='TEF',index=False)
 
-    """workbook  = writer.book
-    worksheet = writer.sheets['VEMS']
-    row = 2
-    col = 0
-
-    worksheet.write(row, col,     '2')
-    worksheet.write(row, col + 1, '24')
-    worksheet.write(row, col + 2, '56')
-    worksheet.write(row, col + 3, '45')
-"""
-"""workbook = xlsxwriter.Workbook("multiple.xlsx")
-worksheet1 = workbook.add_worksheet()
-"""
