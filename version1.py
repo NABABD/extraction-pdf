@@ -59,50 +59,50 @@ def extract_patient_data_from_text(text):
 
     return patient_data
     #return patient_data
-def parametre(p):
+def parametre(p,text):
     patient_data={}
     
     if p=='VEMS':
         #extraction spécifique
-        patient_data['VEMS/Pré']=get_nth_word('test1.txt','VEMS',2)
-        patient_data['VEMS/Zscore']=get_nth_word('test1.txt','VEMS',5)
+        patient_data['VEMS/Pré']=get_nth_word(text,'VEMS',2)
+        patient_data['VEMS/Zscore']=get_nth_word(text,'VEMS',5)
         patient_data['VEMS/POST BD']=0
-        patient_data['VBEex/Pré']=get_nth_word('test1.txt','VBEex',1)
+        patient_data['VBEex/Pré']=get_nth_word(text,'VBEex',1)
         patient_data['VBEex/Post BD']=0
-        patient_data['VBe%VF/prè']=get_nth_word('test1.txt','VBe%VF',1)
+        patient_data['VBe%VF/prè']=get_nth_word(text,'VBe%VF',1)
         patient_data['VBe%VF/POST BD']=0
         
 
         return patient_data
     elif p=='CVF':
-        patient_data['CVF/Pré']=get_nth_word('test1.txt','CVF',2)
-        patient_data['CVF/Zscore']=get_nth_word('test1.txt','CVF',5)
+        patient_data['CVF/Pré']=get_nth_word(text,'CVF',2)
+        patient_data['CVF/Zscore']=get_nth_word(text,'CVF',5)
         patient_data['CVF/POST BD']=0
 
         return patient_data 
     
     elif p=='CRF':
-        patient_data['CRF/Pré']=get_nth_word('test1.txt','CRF',2)
-        patient_data['CRF/Zscore']=get_nth_word('test1.txt','CRF',5)
+        patient_data['CRF/Pré']=get_nth_word(text,'CRF',2)
+        patient_data['CRF/Zscore']=get_nth_word(text,'CRF',5)
         patient_data['CRF/POST BD']=0
 
         return patient_data
     elif p=='CPT':
-            patient_data['CPT/Pré']=get_nth_word('test1.txt','CPT',2)
-            patient_data['CPT/Zscore']=get_nth_word('test1.txt','CPT',5)
+            patient_data['CPT/Pré']=get_nth_word(text,'CPT',2)
+            patient_data['CPT/Zscore']=get_nth_word(text,'CPT',5)
             patient_data['CPT/POST BD']=0
 
             return patient_data 
 
     elif p=='DEMM':
-        patient_data['DEMM/Pré']=get_nth_word('test1.txt','DEMM',2)
-        patient_data['DEMM/Zscore']=get_nth_word('test1.txt','DEMM',5)
+        patient_data['DEMM/Pré']=get_nth_word(text,'DEMM',2)
+        patient_data['DEMM/Zscore']=get_nth_word(text,'DEMM',5)
         patient_data['DEMM/POST BD']=0
 
         return patient_data 
 
     elif p=='TEF':
-        patient_data['TEF/Pré']=get_nth_word('test1.txt','TEF',1)
+        patient_data['TEF/Pré']=get_nth_word(text,'TEF',1)
         patient_data['TEF/Zscore']=0
         patient_data['TEF/POST BD']=0
 
@@ -110,10 +110,32 @@ def parametre(p):
 
     
 
-chemin = 'PDF1.pdf'
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+chemin = 'PDF/PDF1.pdf'
 pdf_text = extract_text_from_pdf(chemin)
 save_text_to_file(pdf_text, 'test1.txt')
+
+chemin2 = 'PDF/PDF2.pdf'
+pdf_text2 = extract_text_from_pdf(chemin2)
+save_text_to_file(pdf_text2, 'test2.txt')
 # Définir le motif d'expression régulière que vous souhaitez rechercher
 regex_pattern = r'\b(VEMS)\b'
 # Use the existing extract_patient_data_from_text function to parse the extracted text
@@ -123,15 +145,15 @@ feuille3_data=feuille1_data.copy()
 feuille4_data=feuille1_data.copy()
 feuille5_data=feuille1_data.copy()
 feuille6_data=feuille1_data.copy()
-feuille1_data.update(parametre('VEMS'))
-feuille2_data.update(parametre('CVF'))
-feuille3_data.update(parametre('CRF'))
-feuille4_data.update(parametre('CPT'))
-feuille5_data.update(parametre('DEMM'))
-feuille6_data.update(parametre('TEF'))
-print(feuille1_data)
-#pdf1_data = parametre(pdf_text)
 
+#pdf1_data = parametre(pdf_text)
+feuille1_data.update(parametre('VEMS','test1.txt'))
+feuille2_data.update(parametre('CVF','test1.txt'))
+feuille3_data.update(parametre('CRF','test1.txt'))
+feuille4_data.update(parametre('CPT','test1.txt'))
+feuille5_data.update(parametre('DEMM','test1.txt'))
+feuille6_data.update(parametre('TEF','test1.txt'))
+print(feuille1_data)
 # Create a DataFrame with the extracted data
 df = pandas.DataFrame([feuille1_data])
 df2 = pandas.DataFrame([feuille2_data])
@@ -139,10 +161,27 @@ df3 = pandas.DataFrame([feuille3_data])
 df4 = pandas.DataFrame([feuille4_data])
 df5 = pandas.DataFrame([feuille5_data])
 df6 = pandas.DataFrame([feuille6_data])
-# Save the DataFrame to an Excel file
-excel_path= 'PatientData.xlsx'
 
-with pandas.ExcelWriter('DATA.xlsx', engine='xlsxwriter') as writer:
+
+#########
+feuille1_data2 = extract_patient_data_from_text(pdf_text2)
+feuille2_data2=feuille1_data2.copy()
+feuille3_data2=feuille1_data2.copy()
+feuille4_data2=feuille1_data2.copy()
+feuille5_data2=feuille1_data2.copy()
+feuille6_data2=feuille1_data2.copy()
+feuille1_data2.update(parametre('VEMS', 'test2.txt'))
+feuille2_data.update(parametre('CVF', 'test2.txt'))
+feuille3_data.update(parametre('CRF', 'test2.txt'))
+feuille4_data.update(parametre('CPT', 'test2.txt'))
+feuille5_data.update(parametre('DEMM', 'test2.txt'))
+feuille6_data.update(parametre('TEF', 'test2.txt'))
+print(feuille1_data2)
+#pdf1_data = parametre(pdf_text)
+
+# Create a DataFrame with the extracted data
+
+with pandas.ExcelWriter('Data.xlsx', engine='xlsxwriter') as writer:
     df.to_excel(writer, sheet_name='VEMS',index=False)
     df2.to_excel(writer, sheet_name='CVF',index=False)
     df3.to_excel(writer, sheet_name='CRF',index=False)
@@ -150,3 +189,16 @@ with pandas.ExcelWriter('DATA.xlsx', engine='xlsxwriter') as writer:
     df5.to_excel(writer, sheet_name='DEMM',index=False)
     df6.to_excel(writer, sheet_name='TEF',index=False)
 
+    workbook  = writer.book
+    worksheet = writer.sheets['VEMS']
+    row = 2
+    
+    worksheet.write(row, 0,'2')
+    col = 1
+    #for i in range(1,len(feuille1_data2)):
+    while col <len(feuille1_data2):
+        worksheet.write(row,col,list(feuille1_data2.values())[col])
+        print(list(feuille1_data2.values())[col])
+        col+=1
+    #worksheet.write(row, col + 2, '56')
+    #worksheet.write(row, col + 3, '45')
