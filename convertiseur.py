@@ -138,31 +138,33 @@ def main():
                 li_parametre=['VEMS','CVF','CRF','CPT','DEMM','TEF']
                 for i in range(0,n):
                     chemin=folder_path+'/'+files[i]
-                    print(chemin)
                     pdf_text = extract_text_from_pdf(chemin)
                     fichier_test='test'+str(i)+'.txt'
+                    
                     save_text_to_file(pdf_text,fichier_test )
                     #print('test'+str(i)+'.txt')
                     # Use the existing extract_patient_data_from_text function to parse the extracted text
+                    
                     for x in range(len(li_parametre)):
                         feuille=extract_patient_data_from_text(pdf_text) 
-                        feuille.update(parametre(li_parametre[x], fichier_test))
-                        
-                        if i==0:
-                            df= pandas.DataFrame([feuille])
-                            df.to_excel(writer, sheet_name=li_parametre[x],index=False)
-                        
-                        workbook  = writer.book
-                        worksheet = writer.sheets[li_parametre [x]]
-                        row = x
-                        
-                        worksheet.write(row, 0,'2')
-                        col = 1
+                        feuille.update(parametre(li_parametre[x], fichier_test))                        
+                        df= pandas.DataFrame([feuille])
+                        df.to_excel(writer, sheet_name=li_parametre[x],index=False)
+                    
+                        #workbook  = writer.book
+                        worksheet = writer.sheets[li_parametre[x]]
+                    
+                        row=i+1
+                        #worksheet.write(row, 0,'2')
+                        col = 0
                         #for i in range(1,len(feuille1_data2)):
-                        while col <len(feuille):
+                        while col<len(feuille) and row<=n:
                             worksheet.write(row,col,list(feuille.values())[col])
-                            print(list(feuille.values())[col])
-                            col+=1 
+                            worksheet.write(0,0,'blablabal')
+                            #print(list(feuille.values())[col])
+                            #print(row,col)
+                            col+=1
+                            
 
                     """
                     feuille1 = extract_patient_data_from_text(pdf_text)

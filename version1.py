@@ -200,5 +200,15 @@ with pandas.ExcelWriter('Data.xlsx', engine='xlsxwriter') as writer:
         worksheet.write(row,col,list(feuille1_data2.values())[col])
         print(list(feuille1_data2.values())[col])
         col+=1
+    worksheet = writer.sheets['CPT']
+    row = 2
+    
+    worksheet.write(row, 0,'2')
+    col = 1
+    #for i in range(1,len(feuille1_data2)):
+    while col <len(feuille1_data2):
+        worksheet.write(row,col,list(feuille1_data2.values())[col])
+        print(list(feuille1_data2.values())[col])
+        col+=1
     #worksheet.write(row, col + 2, '56')
     #worksheet.write(row, col + 3, '45')

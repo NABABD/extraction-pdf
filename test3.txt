@@ -1,50 +1,44 @@
 E.F.R. Pédiatriques C.H.U. de MONTPELLIER - Hôpital Arnaud de Villeneuve
 av. du doyen G. Giraud - 34295 MONTPELLIER Cedex 5 - tél :04.67.33.59.06
-ABDF
-Nom:
-Identification: ZaAb29102004
-Prénom:
-FIHJ Age: 17 Années
+Nom: ABDF Identification: ZaAb29102004
+Prénom: FIHJ Age: 17 Années
 Taille: 176 cm
-Date naissance:
-29/10/2004 Poids: 68.0 kg
-Sexe:
-masculin IMC: 22
-Opérateur:
-Requirand Anne Diagnostic:
-Date test 07.03.22
+Date naissance: 29/10/2004 Poids: 67.0 kg
+Sexe: masculin IMC: 22
+Opérateur: Herbach Flavie Diagnostic:
+Date test 19.09.22
 EFR ENFANTS
 Théo Pré % Théo Post effort %Théo % Pré/Post Post BD ZScore Z-Score
-VT 0.62 0.85 138 1.49
-VRI 2.08
-CI 2.95 2.93 99 -0.07
-CV 4.63 4.34 94 -0.98
+VT 0.62 1.07 174 2.85
+VRI 2.21
+CI 2.95 3.29 111 1.24
+CV 4.63 4.74 102 0.32
 VR 1.14
 CRF-He 2.87
 CPT 5.82
 VR%CPT 22.81
 VR%CPT 22.81
-CVF 4.33 4.34 100 % 0.02
-VEMS 3.75 3.55 95 % -0.41
-VEM.5 2.80
-VIMS 2.10
-DEMM 4.23 3.55 84 % -0.63
-VEMS%CF 87.09 81.72 94 % -0.83
-DPE 7.71 9.08 118 % 0.91
-DEM75 7.86
-DEM50 4.12
-DEM25 1.85 1.36 73 % -0.79
-T DPE 0.05
-TEF 3.96
-VBEex 63
-VBe%VF 1.45
-CRFpl 2.91 3.45 119 1.94
-CPT 5.87 6.39 109 1.30
-VR 1.23 2.04 166 2.80
-CVI 4.63 2.84 61 -6.10
-VR%CPT 22.81 32.00 140 2.35
-SR 0.44 0.95 217 0.89
-SR AW 0.44 1.15 263 1.24
+CVF 4.38 4.59 105 % 0.37
+VEMS 3.79 3.64 96 % -0.30
+VEM.5 2.90
+VIMS 2.18
+DEMM 4.27 3.27 77 % -0.92
+VEMS%CF 87.03 79.40 91 % -1.14
+DPE 7.71 10.21 132 % 1.66
+DEM75 8.40
+DEM50 3.84
+DEM25 1.85 1.25 67 % -1.00
+T DPE 0.03
+TEF 4.85
+VBEex 74
+VBe%VF 1.61
+CRFpl 2.91 3.15 108 0.84
+CPT 5.87 6.43 110 1.41
+VR 1.23 1.69 138 1.60
+CVI 4.63 4.74 102 0.32
+VR%CPT 22.81 26.34 115 0.90
+SR 0.44 1.15 265 1.25
+SR AW 0.44 1.35 309 1.59
 Conclusions
 Exploration fonctionnelle respiratoire est satisfaisante
 Pr MATECKI Stefan
