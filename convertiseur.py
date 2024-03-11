@@ -145,26 +145,25 @@ def main():
                     #print('test'+str(i)+'.txt')
                     # Use the existing extract_patient_data_from_text function to parse the extracted text
                     
-                    for x in range(len(li_parametre)):
+                    for parametre_name in li_parametre:
                         feuille=extract_patient_data_from_text(pdf_text) 
-                        feuille.update(parametre(li_parametre[x], fichier_test))                        
+                        feuille.update(parametre(parametre_name, fichier_test))                        
                         df= pandas.DataFrame([feuille])
-                        df.to_excel(writer, sheet_name=li_parametre[x],index=False)
+                        sheet_name=parametre_name + '_' + str(i) 
+                        df.to_excel(writer, sheet_name,index=False)
                     
                         #workbook  = writer.book
-                        worksheet = writer.sheets[li_parametre[x]]
+                        worksheet = writer.sheets[sheet_name]
                     
-                        row=i+1
+                        row=0
                         #worksheet.write(row, 0,'2')
-                        col = 0
+                        col =0
                         #for i in range(1,len(feuille1_data2)):
-                        while col<len(feuille) and row<=n:
-                            worksheet.write(row,col,list(feuille.values())[col])
-                            worksheet.write(0,0,'blablabal')
-                            #print(list(feuille.values())[col])
-                            #print(row,col)
-                            col+=1
-                            
+                        for key, value in feuille.items():
+                            worksheet.write(row, col, key)  # Write keys as column headers
+                            worksheet.write(1, col, value)  # Write corresponding values
+                            col += 1
+                                        
 
                     """
                     feuille1 = extract_patient_data_from_text(pdf_text)

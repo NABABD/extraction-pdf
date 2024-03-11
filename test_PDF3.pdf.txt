@@ -1,0 +1,49 @@
+E.F.R. Pédiatriques C.H.U. de MONTPELLIER - Hôpital Arnaud de Villeneuve
+av. du doyen G. Giraud - 34295 MONTPELLIER Cedex 5 - tél :04.67.33.59.06
+Nom: Test Identification: GRTFJOXC
+Prénom: Yabcd Age: 12 Années
+Taille: 145 cm
+Date naissance: 24/08/2011 Poids: 51.0 kg
+Sexe: masculin IMC: 24
+Opérateur: Requirand Anne Diagnostic:
+Date test 08.01.24
+EFR ENFANTS
+Théo Pré % Théo Post effort %Théo % Pré/Post Post BD ZScore Z-Score
+VT 0.43 0.53 124 0.47 110 -11 0.94
+VRI 1.05 1.40 33
+CI 1.82 1.59 87 1.88 103 18 -1.64
+CV 2.70 2.30 85 2.53 94 10 -2.37
+VR 0.73
+CRF-He 1.65
+CPT 3.47
+VR%CPT 24.90
+VR%CPT 24.90
+CVF 2.69 2.30 85 % 2.53 94 % 10 % -1.29
+VEMS 2.32 1.66 72 % 2.05 88 % 23 % -2.42
+VEM.5 1.22 1.51 24 %
+VIMS 1.56 1.63 5 %
+DEMM 2.75 1.26 46 % 2.06 75 % 64 % -2.89
+VEMS%CF 86.66 72.47 84 % 80.73 93 % 11 % -2.08
+DPE 4.90 2.91 59 % 3.29 67 % 13 % -2.89
+DEM75 2.80 3.28 17 %
+DEM50 1.51 2.55 68 %
+DEM25 1.27 0.47 37 % 0.84 66 % 80 % -2.61
+T DPE 0.18 0.19 8 %
+TEF 5.11 6.13 20 %
+VBEex 88 107 22 %
+VBe%VF 3.83 4.22 10 %
+CRFpl 1.74 1.88 108 1.44 83 -23 0.81
+CPT 3.57 3.46 97 3.32 93 -4 -0.49
+VR 0.85 1.17 138 0.78 93 -33 1.62
+CVI 2.70 2.03 75 2.34 86 15 -3.94
+VR%CPT 24.90 33.72 135 23.61 95 -30 2.26
+SR 0.87 1.57 180 0.93 107 -40 2.10
+SR AW 0.87 1.74 199 1.09 124 -38 2.61
+Conclusions
+L'exploration fonctionnelle respiratoire objective la présence d'un trouble ventilatoire obstructif global associé à une
+hyperinflation alvéolaire réversible aux bronchodilataeurs.
+Pr MATECKI Stefan
+Plateau d'Explorations Fonctionnelles Pédiatriques
+CHU Arnaud de Villeneuve
+MONTPELLIER
+BODY COMPLET Normes:Zapletal 1987 7 à 17 ans , ECCS93 pour Adultes, GLI2012 pour Courbe Débit Volume 1 / 2
