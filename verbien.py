@@ -1,5 +1,5 @@
 import os
-import pandas
+import pandas as pd
 import pdfplumber
 import re
 import tkinter as tk
@@ -16,14 +16,28 @@ def save_text_to_file(text, file_path):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(text)
 
-def get_nth_word(file_path, keyword, n):
-    with open(file_path, 'r') as file:
-        for line in file:
-            if line.startswith(keyword):
-                words = line.split()
-                if len(words) >= n+1:
-                    nth_word = words[n]
-                    return nth_word
+def get_nth_word(text, keyword, n):
+    for line in text.splitlines():
+        if line.startswith(keyword):
+            words = line.split()
+            if len(words) > n:
+                return words[n]
+    return None
+def get_nth_word_from_line(line, n):
+
+    words = line.split()  # Split the line into words
+    if len(words) > n:
+        return words[n]  # Return the nth word if it exists
+    else:
+        return None
+def get_nth_line_starting_with_keyword(text, keyword, occurrence_number):
+    current_occurrence = 0
+    for line in text.splitlines():
+        if line.strip().startswith(keyword):
+            current_occurrence += 1
+            if current_occurrence == occurrence_number:
+                return line
+    return None
 
 def get_first_line_with_param(file_path,param):
     with open(file_path, 'r') as file:
@@ -66,33 +80,11 @@ def parametre(p, text):
         else:
             patient_data['CV/POST effort'] = ''
 
-        return patient_data
 
     elif p=='CRF':
-        '''first_line = get_first_line_with_param(text,'CRF')  # Get the first line starting with 'CVF'
-        patient_data['CRF-He/Pré'] = get_nth_word(first_line,'CRF', 1) or 0
-        patient_data['CRF-He/Zscore'] = get_nth_word(first_line,'CRF', -1) or 0
-        if (get_nth_word(first_line, 'CRF', -1)!=get_nth_word(first_line, 'CRF', 4)):
-            patient_data['CRF-He/POST effort'] = get_nth_word(first_line, 'CRF', 4)
-        else:
-            patient_data['CRF-He/POST effort'] = ''
-    '''
-        # First occurrence
-        patient_data['CRF-he/Pré'] = get_nth_word(text, 'CRF', 1) or 0
+        patient_data['CRF/Pré'] = get_nth_word(text, 'CRF', 2) or 0
         patient_data['CRF/Zscore'] = get_nth_word(text, 'CRF', 5) or 0
         patient_data['CRF/POST BD'] = 0
-
-        
-        return patient_data
-    elif p=='CRF':
-        
-# Second occurrence
-        second_occurrence_text = text.split('CRF', 2)[2]  # Split at CRF, twice, to get text after the second occurrence
-        patient_data['CRFpl/Pré_Second'] = get_nth_word(second_occurrence_text, 'CRF', 1) or 0
-        patient_data['CRF/Zscore_Second'] = get_nth_word(second_occurrence_text, 'CRF', 5) or 0
-        patient_data['CRF/POST BD_Second'] = 0
-        return patient_data
-
 
     elif p == 'VEMS':
         # Extraction spécifique
@@ -109,9 +101,6 @@ def parametre(p, text):
         patient_data['VBe%VF/pré'] = get_nth_word(text, 'VBe%VF', 1) or 0
         patient_data['VBe%VF/POST BD'] = get_nth_word(text,'VBe%VF',2)
 
-
-        return patient_data
-
     elif p == 'CVF':
         patient_data['CVF/Pré'] = get_nth_word(text, 'CVF', 2) or 0
         patient_data['CVF/Zscore'] = get_nth_word(text, 'CVF', -1) or 0
@@ -120,21 +109,34 @@ def parametre(p, text):
         else:
             patient_data['CVF/POST effort'] = ''
 
+
+
+
+    elif p == 'CPT-He':
+        line_cpt_he = get_nth_line_starting_with_keyword(text, 'CPT', 1)
+        print(f"Debug CPT-He line: {line_cpt_he}")  # Debug print
+
+        if line_cpt_he:  # Check if line_crf_he is not None
+            patient_data['CPT-He/Pré'] = get_nth_word_from_line(line_cpt_he, 1) or 0
+            patient_data['CPT-He/Zscore'] = get_nth_word_from_line(line_cpt_he, 5) or 0
+        else:
+            patient_data['CPT-He/Pré'] = 0
+            patient_data['CPT-He/Zscore'] = 0
+            patient_data['CPT-He/POST BD'] = 0
+
+        return patient_data
+    elif p == 'CPT-Pl':
+        line_cpt_pl = get_nth_line_starting_with_keyword(text, 'CPT', 2)
+        if line_cpt_pl:  # Check if line_crf_he is not None
+            patient_data['CPT-Pl/Pré'] = get_nth_word_from_line(line_cpt_pl, 2)
+            patient_data['CPT-Pl/Zscore'] = get_nth_word_from_line(line_cpt_pl, -1)
+        else:
+            patient_data['CPT-Pl/Pré'] = 0
+            patient_data['CPT-Pl/Zscore'] = 0
+            patient_data['CPT-Pl/POST BD'] = 0
+
         return patient_data
 
-    elif p == 'CRF':
-        patient_data['CRF/Pré'] = get_nth_word(text, 'CRF', 2) or 0
-        patient_data['CRF/Zscore'] = get_nth_word(text, 'CRF', 5) or 0
-        patient_data['CRF/POST BD'] = 0
-
-        return patient_data
-
-    elif p == 'CPT':
-        patient_data['CPT/Pré'] = get_nth_word(text, 'CPT', 2) or 0
-        patient_data['CPT/Zscore'] = get_nth_word(text, 'CPT', 5) or 0
-        patient_data['CPT/POST BD'] = 0
-
-        return patient_data
 
     elif p == 'DEMM':
         patient_data['DEMM/Pré'] = get_nth_word(text, 'DEMM', 2) or 0
@@ -146,8 +148,7 @@ def parametre(p, text):
             patient_data['DEMM/POST effort']=''
 
 
-        return patient_data
-    
+
     elif p == 'DEM25':
         patient_data['DEM25/Pré'] = get_nth_word(text, 'DEM25', 2) or 0
         patient_data['DEM25/Zscore'] = get_nth_word(text, 'DEM25', 5) or 0
@@ -158,18 +159,16 @@ def parametre(p, text):
             patient_data['DEM25/POST effort']=''
 
 
-        return patient_data
 
     elif p == 'TEF':
         patient_data['TEF/Pré'] = get_nth_word(text, 'TEF', 1) or 0
         patient_data['TEF/Zscore'] = ''
         patient_data['TEF/POST effort'] = get_nth_word(text, 'TEF', 2)
 
-        return patient_data
-
-
     else:
         return patient_data
+
+    return patient_data
 
 
 def choose_folder():
@@ -193,10 +192,10 @@ def main():
                 print(file_name)
 
             n = len(files)
-            with pandas.ExcelWriter('doubleData.xlsx', engine='xlsxwriter') as writer:
-                li_parametre = ['CV','VEMS', 'CVF', 'CRF-He','CPT', 'DEMM','DEM25', 'TEF','CRFpl']
-                existing_data = {sheet_name: pandas.DataFrame() for sheet_name in li_parametre}
-                
+            with pd.ExcelWriter('doubleData.xlsx', engine='xlsxwriter') as writer:
+                li_parametre = ['VEMS', 'CVF', 'CPT-He', 'CPT-Pl', 'DEMM', 'TEF', 'DEM25']
+                existing_data = {sheet_name: pd.DataFrame() for sheet_name in li_parametre}
+
                 for i in range(n):
                     chemin = folder_path + '/' + files[i]
                     print(chemin)
@@ -206,15 +205,15 @@ def main():
 
                     for param in li_parametre:
                         feuille = extract_patient_data_from_text(pdf_text)
-                        feuille.update(parametre(param, fichier_test))
+                        feuille.update(parametre(param, pdf_text))
 
                         # Check if the existing_data dictionary for the current parameter is empty
                         if existing_data[param].empty:
-                            df = pandas.DataFrame([feuille])
+                            df = pd.DataFrame([feuille])
                         else:
                             # Concatenate the new DataFrame with the existing DataFrame for the current parameter
-                            df = pandas.concat([existing_data[param], pandas.DataFrame([feuille])], ignore_index=True)
-                        
+                            df = pd.concat([existing_data[param], pd.DataFrame([feuille])], ignore_index=True)
+
                         # Update the existing_data dictionary with the updated DataFrame for the current parameter
                         existing_data[param] = df
 

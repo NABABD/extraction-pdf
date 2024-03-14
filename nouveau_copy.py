@@ -24,6 +24,23 @@ def get_nth_word(file_path, keyword, n):
                 if len(words) >= n+1:
                     nth_word = words[n]
                     return nth_word
+                
+
+def get_nth_word_cpt(file_path, keyword, occurrence,n):
+    with open(file_path, 'r') as file:
+        cpt_count = 0  # Initialize a counter for 'CPT' occurrences
+        for line in file:
+            if line.startswith(keyword):
+                words = line.split()
+                for word in words:
+                    if word == keyword:
+                        cpt_count += 1
+                        if cpt_count == occurrence:  # Check if it's the desired occurrence of 'CPT'
+                            if len(words) >= n+1:
+                                nth_word = words[n]
+                                return nth_word
+    return None  # Return None if the desired occurrence is not found or if the file doesn't contain the keyword 'CPT'
+
 
 def get_first_line_with_param(file_path,param):
     with open(file_path, 'r') as file:
@@ -126,15 +143,9 @@ def parametre(p, text):
         patient_data['CRF/Pré'] = get_nth_word(text, 'CRF', 2) or 0
         patient_data['CRF/Zscore'] = get_nth_word(text, 'CRF', 5) or 0
         patient_data['CRF/POST BD'] = 0
-
+        
         return patient_data
 
-    elif p == 'CPT':
-        patient_data['CPT/Pré'] = get_nth_word(text, 'CPT', 2) or 0
-        patient_data['CPT/Zscore'] = get_nth_word(text, 'CPT', 5) or 0
-        patient_data['CPT/POST BD'] = 0
-
-        return patient_data
 
     elif p == 'DEMM':
         patient_data['DEMM/Pré'] = get_nth_word(text, 'DEMM', 2) or 0
@@ -145,7 +156,7 @@ def parametre(p, text):
         else:
             patient_data['DEMM/POST effort']=''
 
-
+        print(patient_data)
         return patient_data
     
     elif p == 'DEM25':
@@ -161,15 +172,27 @@ def parametre(p, text):
         return patient_data
 
     elif p == 'TEF':
-        patient_data['TEF/Pré'] = get_nth_word(text, 'TEF', 1) or 0
+        patient_data['TEF/Pré'] = get_nth_word_cpt(text, 'TEF', 1,1) or 0
         patient_data['TEF/Zscore'] = ''
-        patient_data['TEF/POST effort'] = get_nth_word(text, 'TEF', 2)
+        patient_data['TEF/POST effort'] = get_nth_word_cpt(text, 'TEF', 1,2)
 
         return patient_data
-
-
+    elif p == 'CPT-he':
+            patient_data['CPT-he/Pré'] = get_nth_word_cpt(text,'CPT',1,2)or 0
+            patient_data['CPT-he/Zscore'] =get_nth_word_cpt(text,'CPT',1,1)or 0
+            patient_data['CPT-he/POST BD'] = 0
+           
+            return patient_data
+   
+    elif p=='CPTpl':
+            patient_data['CPTpl/Pré'] = get_nth_word_cpt(text,'CPT',2,2)or 0
+            patient_data['CPTpl/Zscore'] =get_nth_word_cpt(text,'CPT',2,1)or 0
+            patient_data['CPTpl/POST BD'] = 0
+            print(patient_data)
+            return patient_data
     else:
         return patient_data
+   
 
 
 def choose_folder():
@@ -194,7 +217,7 @@ def main():
 
             n = len(files)
             with pandas.ExcelWriter('doubleData.xlsx', engine='xlsxwriter') as writer:
-                li_parametre = ['CV','VEMS', 'CVF', 'CRF-He','CPT', 'DEMM','DEM25', 'TEF','CRFpl']
+                li_parametre = ['CV','VEMS', 'CVF', 'CRF-He','CPT-he', 'DEMM','DEM25', 'TEF','CRFpl','CPTpl']
                 existing_data = {sheet_name: pandas.DataFrame() for sheet_name in li_parametre}
                 
                 for i in range(n):
@@ -219,7 +242,12 @@ def main():
                         existing_data[param] = df
 
                         # Write the DataFrame to the Excel file
-                        df.to_excel(writer, sheet_name=param, index=False)
+                        #df.to_excel(writer, sheet_name=param, index=False,float_format='%.2f')
+                        if param == 'CPTpl':  # For CPTpl parameter
+                            df.to_excel(writer, sheet_name=param, index=False, float_format="%.2f")  # Format float to keep two decimal places
+                        else:
+                            df.to_excel(writer, sheet_name=param, index=False)
+                                                
 
         else:
             print("No files found in the selected folder.")
